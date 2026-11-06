@@ -4,7 +4,7 @@ class ConsoleNotifier:
  
  
 class EmailNotifier:
-    def _init_(self, server: str = "smtp.kampus.ac.id"):
+    def __init__(self, server: str = "smtp.kampus.ac.id"):
         self.server = server
  
     def kirim(self, penerima: str, pesan: str) -> None:
