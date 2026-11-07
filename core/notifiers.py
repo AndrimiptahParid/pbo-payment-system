@@ -1,3 +1,13 @@
+from core.base import Notifier
+
+@Notifier.register
+class TelegramNotifier:
+    def __init__(self, token_bot: str = "TOKEN-CONTOH"):
+        self.token_bot = token_bot
+
+    def kirim(self, penerima: str, pesan: str) -> None:
+        print(f"[TELEGRAM] ke {penerima}: {pesan}")
+
 class ConsoleNotifier:
     def kirim(self, penerima: str, pesan: str) -> None:
         print(f"[CONSOLE] ke {penerima}: {pesan}")

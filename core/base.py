@@ -1,7 +1,15 @@
 from abc import ABC, abstractmethod
  
 from core.utils import rupiah
- 
+
+
+class Notifier(ABC):
+    """Kontrak (abstract base class) untuk semua sistem notifikasi."""
+    
+    @abstractmethod
+    def kirim(self, penerima: str, pesan: str) -> None:
+        """Kirim pesan notifikasi ke penerima."""
+        pass
  
 class PembayaranGagal(Exception):
     """Dilempar saat pembayaran ditolak atau tidak valid."""
@@ -12,7 +20,11 @@ class PaymentMethod(ABC):
  
     def __init__(self, nama: str):
         self.nama = nama
- 
+    
+    @abstractmethod
+    def biaya_admin(self, jumlah: float) -> float:
+        pass
+    
     @abstractmethod
     def validasi(self, jumlah: float) -> bool:
         """Periksa apakah pembayaran dapat diproses."""

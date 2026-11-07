@@ -17,6 +17,8 @@ class PaymentProcessor:
     def checkout(
         self, metode: PaymentMethod, jumlah: float, pelanggan: str
     ) -> bool:
+        admin = metode.biaya_admin(jumlah)
+        total = jumlah + admin
         try:
             trx_id = metode.proses(jumlah)
         except PembayaranGagal as err:
@@ -26,7 +28,7 @@ class PaymentProcessor:
         self.riwayat.append((trx_id, metode.nama, jumlah))
         self.notifier.kirim(
             pelanggan,
-            f"Pembayaran {rupiah(jumlah)} via {metode.nama} berhasil. "
+            f"Pembayaran {rupiah(jumlah)}(Biaya Admin: {rupiah(admin)}, Total: {rupiah(total)}) via {metode.nama} berhasil. "
             f"ID: {trx_id}",
         )
         return True
